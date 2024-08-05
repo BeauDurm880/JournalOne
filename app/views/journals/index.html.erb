@@ -9,6 +9,7 @@
             <h5 class="mb-1"><strong>Name:</strong> <%= entry.name %></h5>
             <p class="mb-1"><strong>Description:</strong> <%= truncate(entry.journal_info, length: 100) %></p>
             <p class="mb-1"><strong>Date Added:</strong> <%= entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+            <p class="mb-1"><strong>Day Rating:</strong> <%= entry.day_rating %> / 10</p>
           </div>
           <div class="col-md-4 text-md-right">
             <div class="btn-group" role="group" aria-label="Actions">

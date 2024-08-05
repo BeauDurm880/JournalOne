@@ -3,12 +3,37 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 /* Ensure these styles are in your main CSS file */
-.btn-inline {
-    margin-right: 5px; /* Spacing between buttons */
+.button-custom {
+    background-color: white;
+    border: 2px solid #007bff; /* Bootstrap blue */
+    color: #007bff;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: background-color 0.2s, color 0.2s;
   }
   
-  .delete-btn:hover {
-    background-color: red !important;
-    color: white !important;
+  .button-custom:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  .form-control-range {
+    width: 80%; /* Adjust width as needed */
+    margin: 0 10px;
+  }
+  
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mr-2 {
+    margin-right: 10px;
+  }
+  
+  .ml-2 {
+    margin-left: 10px;
   }
   

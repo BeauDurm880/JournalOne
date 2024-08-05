@@ -6,6 +6,7 @@
       <h5 class="card-title"><strong>Name:</strong> <%= @entry.name %></h5>
       <p class="card-text"><strong>Description:</strong> <%= @entry.journal_info %></p>
       <p class="card-text"><strong>Date Added:</strong> <%= @entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+      <p class="card-text"><strong>Day Rating:</strong> <%= @entry.day_rating %> / 10</p> <!-- Added Day Rating -->
       <div class="d-flex justify-content-start mt-3">
         <div class="btn-group" role="group" aria-label="Actions">
           <%= link_to 'Back to Entries', journals_path, class: "btn btn-outline-primary d-inline-block" %>
@@ -16,5 +17,6 @@
     </div>
   </div>
 </div>
+
 
 
