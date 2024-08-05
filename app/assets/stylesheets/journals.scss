@@ -1,0 +1,14 @@
+// Place all the styles related to the Journals controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+/* Ensure these styles are in your main CSS file */
+.btn-inline {
+    margin-right: 5px; /* Spacing between buttons */
+  }
+  
+  .delete-btn:hover {
+    background-color: red !important;
+    color: white !important;
+  }
+  

@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # Ensure the root path is pointing to journals#index if that is your landing page
+  root 'journals#index'
+
+  # This should map entries to JournalsController if you're using that naming
+  resources :journals, controller: 'journals'
 end
+

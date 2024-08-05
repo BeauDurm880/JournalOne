@@ -1,0 +1,30 @@
+<h1 class="mb-4 text-center">All Entries</h1>
+
+<div class="container">
+  <div class="list-group">
+    <% @entries.each do |entry| %>
+      <div class="list-group-item mb-3">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h5 class="mb-1"><strong>Name:</strong> <%= entry.name %></h5>
+            <p class="mb-1"><strong>Description:</strong> <%= truncate(entry.journal_info, length: 100) %></p>
+            <p class="mb-1"><strong>Date Added:</strong> <%= entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+          </div>
+          <div class="col-md-4 text-md-right">
+            <div class="btn-group" role="group" aria-label="Actions">
+              <%= link_to 'Show', journal_path(entry), class: "btn btn-outline-primary d-inline-block" %>
+              <%= link_to 'Edit', edit_journal_path(entry), class: "btn btn-outline-primary d-inline-block" %>
+              <%= button_to "Delete", journal_path(entry), method: :delete, data: { confirm: "Are you sure you want to delete this journal entry?" }, class: "btn btn-outline-primary d-inline-block delete-btn ml-2" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
