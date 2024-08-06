@@ -1,6 +1,37 @@
 <h1 class="mb-4 text-center">All Entries</h1>
 
 <div class="container">
+  <!-- Filter form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= form_with url: journals_path, method: :get, local: true do |form| %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= form.label :start_date, 'Start Date', class: "form-label" %>
+            <%= form.date_field :start_date, value: params[:start_date], class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= form.label :end_date, 'End Date', class: "form-label" %>
+            <%= form.date_field :end_date, value: params[:end_date], class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= form.label :min_rating, 'Min Rating', class: "form-label" %>
+            <%= form.number_field :min_rating, value: params[:min_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= form.label :max_rating, 'Max Rating', class: "form-label" %>
+            <%= form.number_field :max_rating, value: params[:max_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group mt-3 text-center">
+          <%= form.submit 'Filter', class: "btn btn-outline-primary" %>
+          <%= link_to 'Reset', journals_path, class: 'btn btn-outline-secondary ml-2' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Entries list -->
   <div class="list-group">
     <% @entries.each do |entry| %>
       <div class="list-group-item mb-3">
@@ -10,6 +41,8 @@
             <p class="mb-1"><strong>Description:</strong> <%= truncate(entry.journal_info, length: 100) %></p>
             <p class="mb-1"><strong>Date Added:</strong> <%= entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
             <p class="mb-1"><strong>Day Rating:</strong> <%= entry.day_rating %> / 10</p>
+            <p class="mb-1"><strong>Trainings Done:</strong> <%= entry.trainings_done %></p>
+            <p class="mb-1"><strong>Internal Work Done:</strong> <%= entry.internal_work_done %></p>
           </div>
           <div class="col-md-4 text-md-right">
             <div class="btn-group" role="group" aria-label="Actions">
@@ -23,6 +56,9 @@
     <% end %>
   </div>
 </div>
+
+
+
 
 
 

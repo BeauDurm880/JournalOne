@@ -2,25 +2,55 @@
 
 <%= form_with(model: @entry, local: true) do |form| %>
   <div class="form-group">
-    <%= form.label :name %>
+    <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :journal_info %>
+    <%= form.label :journal_info, class: "form-label" %>
     <%= form.text_area :journal_info, class: "form-control" %>
   </div>
 
-  <!-- New field for day rating -->
+  <!-- New fields for Trainings Done and Internal Work Done -->
   <div class="form-group">
-    <%= form.label :day_rating, 'How would you rate your day?', class: "form-label" %>
-    <%= form.number_field :day_rating, class: "form-control", min: 1, max: 10 %>
+    <%= form.label :trainings_done, 'Trainings Done', class: "form-label" %>
+    <%= form.text_area :trainings_done, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.submit "Update Entry", class: "btn btn-outline-primary" %>
-    <%= link_to 'Back to Entries', journals_path, class: 'btn btn-outline-secondary ml-2' %>
+    <%= form.label :internal_work_done, 'Internal Work Done', class: "form-label" %>
+    <%= form.text_area :internal_work_done, class: "form-control" %>
+  </div>
+
+  <!-- Slider for Day Rating -->
+  <div class="form-group">
+    <%= form.label :day_rating, 'How would you rate your day?', class: "form-label" %>
+    <div class="d-flex align-items-center">
+      <span class="mr-2">😢</span> <!-- Sad face -->
+      <%= form.range_field :day_rating, class: "form-control-range", min: 1, max: 10, step: 1, value: @entry.day_rating || 5 %>
+      <span class="ml-2">😊</span> <!-- Smiley face -->
+    </div>
+    <small id="ratingValue" class="text-muted">Rating: <%= @entry.day_rating || 5 %></small>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Update Entry", class: "btn btn-primary" %>
+    <%= link_to 'Back to Entries', journals_path, class: 'btn btn-secondary ml-2' %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var slider = document.querySelector('input[type="range"]');
+    var output = document.getElementById('ratingValue');
+
+    slider.addEventListener('input', function(event) {
+      output.textContent = 'Rating: ' + event.target.value;
+    });
+
+    // Initialize the output on page load
+    output.textContent = 'Rating: ' + slider.value;
+  });
+</script>
 
 
