@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day Ratings Report</title>
+  <meta charset="utf-8">
+  <%= wicked_pdf_stylesheet_link_tag 'application' %> <!-- Include any necessary CSS for PDF -->
+</head>
+<body>
+  <h1>Day Ratings Over the Selected Period</h1>
+
+  <%= line_chart @day_rating_data, 
+      xtitle: "Date", 
+      ytitle: "Average Day Rating", 
+      library: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+              displayFormats: {
+                day: 'MMM D'
+              }
+            }
+          }
+        }
+      }
+  %>  
+</body>
+</html>

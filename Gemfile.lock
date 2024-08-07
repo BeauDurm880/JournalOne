@@ -94,6 +94,8 @@ GEM
       warden (~> 1.2.3)
     erubi (1.13.0)
     execjs (2.9.1)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
     globalid (1.2.1)
@@ -250,6 +252,8 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked_pdf (2.8.0)
+      activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.17)
@@ -265,6 +269,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   chartkick
   devise
+  faker
   googlecharts
   groupdate
   jbuilder (~> 2.7)
@@ -283,6 +288,7 @@ DEPENDENCIES
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.4)
+  wicked_pdf
 
 RUBY VERSION
    ruby 3.1.2p20

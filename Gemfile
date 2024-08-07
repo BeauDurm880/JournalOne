@@ -31,6 +31,10 @@ gem 'turbo-rails'
 gem 'chartkick'
 gem 'googlecharts'
 gem 'groupdate'
+gem 'wicked_pdf'
+gem 'faker'
+
+
 
 
 # Reduces boot times through caching; required in config/boot.rb

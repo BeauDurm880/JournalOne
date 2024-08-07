@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= @title || "PDF Document" %></title>
+  <%= wicked_pdf_stylesheet_link_tag 'pdf' %> <!-- Add custom styles for PDF -->
+</head>
+<body>
+  <%= yield %>
+</body>
+</html>
