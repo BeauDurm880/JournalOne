@@ -1,21 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-  <div class="container">
-    <a class="navbar-brand" href="<%= root_path %>">BenchPlanner</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <% unless current_page?(root_path) %>
-          <li class="nav-item">
-            <%= link_to 'Back to Entries', journals_path, class: 'nav-link' %>
-          </li>
-        <% end %>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">JournalOne</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <% if user_signed_in? %>
         <li class="nav-item">
           <%= link_to 'New Entry', new_journal_path, class: 'nav-link' %>
         </li>
-      </ul>
-    </div>
+        <li class="nav-item">
+          <%= link_to 'Day Rating Report', reports_day_rating_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path %>
+          
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to 'Login', new_user_session_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>
+
+
 

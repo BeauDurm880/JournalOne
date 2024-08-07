@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  # Ensure the root path is pointing to journals#index if that is your landing page
+  # Route for the day rating report
+  get 'reports/day_rating', to: 'reports#day_rating'
+
+  # Devise routes for user authentication
+  # devise_for :users
+  devise_for :users do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
+  # Root path set to journals#index if it is your landing page
   root 'journals#index'
 
-  # This should map entries to JournalsController if you're using that naming
-  resources :journals, controller: 'journals'
+  # Resources for journals mapped to JournalsController
+  resources :journals
 end
 

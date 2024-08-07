@@ -1,0 +1,21 @@
+<h1>Day Ratings Over the Last Month</h1>
+
+<%= line_chart @day_rating_data, 
+    xtitle: "Date", 
+    ytitle: "Average Day Rating", 
+    library: {
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'day',
+            displayFormats: {
+              day: 'MMM D'
+            }
+          }
+        }
+      }
+    }
+%>
+
+

@@ -7,11 +7,9 @@ module.exports = function(api) {
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
-      'Please specify a valid `NODE_ENV` or ' +
-        '`BABEL_ENV` environment variables. Valid values are "development", ' +
-        '"test", and "production". Instead, received: ' +
-        JSON.stringify(currentEnv) +
-        '.'
+      'Please specify a valid `NODE_ENV` or `BABEL_ENV` environment variables. ' +
+      'Valid values are "development", "test", and "production". Instead, received: ' +
+      JSON.stringify(currentEnv) + '.'
     )
   }
 
@@ -43,39 +41,23 @@ module.exports = function(api) {
       '@babel/plugin-transform-destructuring',
       [
         '@babel/plugin-proposal-class-properties',
-        {
-          loose: true
-        }
+        { loose: true }
       ],
       [
         '@babel/plugin-proposal-object-rest-spread',
-        {
-          useBuiltIns: true
-        }
+        { useBuiltIns: true }
       ],
       [
-        '@babel/plugin-proposal-private-methods',
-        {
-          loose: true
-        }
-      ],
-      [
-        '@babel/plugin-proposal-private-property-in-object',
-        {
-          loose: true
-        }
+        '@babel/plugin-transform-private-methods', // Updated plugin
+        { loose: true }
       ],
       [
         '@babel/plugin-transform-runtime',
-        {
-          helpers: false
-        }
+        { helpers: false }
       ],
       [
         '@babel/plugin-transform-regenerator',
-        {
-          async: false
-        }
+        { async: false }
       ]
     ].filter(Boolean)
   }
