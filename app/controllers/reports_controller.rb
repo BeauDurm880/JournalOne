@@ -7,6 +7,7 @@ class ReportsController < ApplicationController
 
   def day_rating_pdf
     @day_rating_data = load_day_rating_data
+    @journals = Journal.where(created_at: @start_date..@end_date)
 
     respond_to do |format|
       format.html
@@ -23,8 +24,9 @@ class ReportsController < ApplicationController
 
   def load_day_rating_data
     Journal.where(created_at: @start_date..@end_date)
-           .group_by_day(:created_at)
-           .average(:day_rating)
+           .group("DATE(created_at)", :id)  # Group by date and id
+           .order("DATE(created_at) ASC")   # Order by date in ascending order
+           .pluck("DATE(created_at)", "AVG(day_rating)", "id")
   end
 
   def set_date_range

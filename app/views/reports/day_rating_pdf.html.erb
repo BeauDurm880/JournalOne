@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Day Ratings Report</title>
+  <title>Day Rating Report</title>
   <meta charset="utf-8">
-  <%= wicked_pdf_stylesheet_link_tag 'application' %> <!-- Include any necessary CSS for PDF -->
+  <%= wicked_pdf_stylesheet_link_tag 'application' %>
 </head>
 <body>
-  <h1>Day Ratings Over the Selected Period</h1>
+  <h1>Happiness Ratings Report</h1>
+  <p>From <%= @start_date.strftime('%B %d, %Y') %> to <%= @end_date.strftime('%B %d, %Y') %></p>
 
-  <%= line_chart @day_rating_data, 
-      xtitle: "Date", 
-      ytitle: "Average Day Rating", 
-      library: {
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'day',
-              displayFormats: {
-                day: 'MMM D'
-              }
-            }
-          }
-        }
-      }
-  %>  
+  <!-- Table Display -->
+  <div class="table-responsive mt-4">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Average Day Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @day_rating_data.each do |date, average_rating, _id| %>
+          <tr>
+            <td><%= date.strftime('%B %d, %Y') %></td>
+            <td><%= number_with_precision(average_rating, precision: 2) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Detailed Entries -->
+  <h2>Detailed Journal Entries</h2>
+  <% @journals.each do |journal| %>
+    <div class="journal-entry">
+      <h3><%= journal.name %></h3>
+      <p><strong>Date:</strong> <%= journal.created_at.strftime('%B %d, %Y') %></p>
+      <p><strong>Day Rating:</strong> <%= journal.day_rating %></p>
+      <p><strong>Details:</strong> <%= journal.journal_info %></p>
+      <p><strong>Trainings Done:</strong> <%= journal.trainings_done %></p>
+      <p><strong>Internal Work Done:</strong> <%= journal.internal_work_done %></p>
+      <hr>
+    </div>
+  <% end %>
 </body>
 </html>
+

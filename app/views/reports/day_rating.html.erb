@@ -1,4 +1,4 @@
-<h1>Day Ratings Over Selected Period</h1>
+<h1>Happiness Ratings Over Selected Period</h1>
 
 <%= form_with url: reports_day_rating_path, method: :get, local: true do |form| %>
   <div class="form-group">
@@ -16,7 +16,7 @@
 
 <%= line_chart @day_rating_data,
     xtitle: "Date",
-    ytitle: "Average Day Rating",
+    ytitle: "Happiness Day Rating",
     library: {
       scales: {
         x: {
@@ -31,6 +31,42 @@
       }
     }
 %>
+
+<!-- Move PDF Button Below -->
+<div class="mt-3">
+  <%= link_to "Generate Report", day_rating_pdf_path(format: :pdf, start_date: params[:start_date], end_date: params[:end_date]), target: "_blank", class: "btn btn-secondary" %>
+</div>
+
+<!-- Table Display -->
+<div class="table-responsive mt-4">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Average Day Rating</th>
+        <th>View Entry</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @day_rating_data.each do |date, average_rating, id| %>
+        <tr>
+          <td><%= date.strftime('%B %d, %Y') %></td>
+          <td><%= number_with_precision(average_rating, precision: 2) %></td>
+          <td><%= link_to 'View Entry', journal_path(id), class: 'btn btn-link' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+
 
 
 
