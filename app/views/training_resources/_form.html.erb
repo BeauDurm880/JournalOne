@@ -1,0 +1,57 @@
+<!-- app/views/training_resources/_form.html.erb -->
+<div class="container">
+  <%= form_with(model: @training_resource, local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :link %>
+      <%= form.text_field :link, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :commentary %>
+      <%= form.text_area :commentary, class: 'form-control', rows: 4 %>
+    </div>
+    <div class="form-group">
+      <%= form.label :job_tag_ids, "Job Tags" %><br>
+      <% JobTag.all.each do |job_tag| %>
+        <div class="form-check form-check-inline">
+          <%= form.check_box :job_tag_ids, { multiple: true, class: "form-check-input", id: "job_tag_#{job_tag.id}" }, job_tag.id %>
+          <%= form.label "job_tag_#{job_tag.id}", job_tag.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= form.label :rating, 'Rating (1 to 10)', for: "training_resource_rating" %>
+      <div class="d-flex align-items-center">
+        <span class="mr-2">😞</span>
+        <%= form.range_field :rating, in: 1..10, step: 1, class: "form-control-range", id: "training_resource_rating" %>
+        <span class="ml-2">😃</span>
+      </div>
+      <small id="ratingValue" class="text-muted">Rating: <%= @training_resource.rating %></small>
+    </div>
+    <div class="form-group">
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var slider = document.querySelector('input[type="range"]');
+    var output = document.getElementById('ratingValue');
+
+    slider.addEventListener('input', function(event) {
+      output.textContent = 'Rating: ' + event.target.value;
+    });
+
+    // Initialize the output on page load
+    output.textContent = 'Rating: ' + slider.value;
+  });
+</script>
+
+
+
+
+

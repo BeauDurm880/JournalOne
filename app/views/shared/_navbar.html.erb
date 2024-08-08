@@ -19,6 +19,9 @@
           <%= link_to 'Account', user_account_path, class: 'nav-link' %> <!-- Added account link -->
         </li>
         <li class="nav-item">
+          <%= link_to 'Training Resources', training_resources_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
           <%= link_to "Sign Out", destroy_user_session_path, class: 'nav-link text-danger' %>
         </li>
       <% else %>

@@ -35,3 +35,4 @@ days_in_month = Time.days_in_month(current_month, current_year)
 end
 
 puts "Added journal entries for each day of #{Date::MONTHNAMES[current_month]} #{current_year} where missing."
+JobTag.create([{ name: 'Business Analyst' }, { name: 'Software Developer' }, { name: 'Software Tester' }])

@@ -1,0 +1,32 @@
+<!-- app/views/training_resources/index.html.erb -->
+<div class="container">
+  <h1 class="text-center">Training Resources</h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h4 class="card-title">Upload Helpful Courses</h4>
+      <%= render 'form' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @training_resources.each do |training_resource| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= training_resource.title %></h5>
+            <p class="card-text"><%= training_resource.commentary %></p>
+            <p class="card-text">Rating: <%= training_resource.rating %>/10</p>
+            <p class="card-text">Tags: <%= training_resource.job_tags.map(&:name).join(", ") %></p>
+            <p class="card-text">Posted by: <%= training_resource.user.name %></p>
+            <%= image_tag training_resource.user.avatar.url, class: "img-thumbnail", size: "50x50" if training_resource.user.avatar.present? %>
+            <%= link_to 'View', training_resource_path(training_resource), class: 'btn btn-primary' %>
+            <%= link_to 'Edit', edit_training_resource_path(training_resource), class: 'btn btn-secondary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+

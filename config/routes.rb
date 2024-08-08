@@ -19,8 +19,12 @@ Rails.application.routes.draw do
   get 'reports/day_rating_pdf', to: 'reports#day_rating_pdf', as: 'day_rating_pdf' # Route to generate PDF of day ratings
   post 'reports/upload_chart_image', to: 'reports#upload_chart_image' # Route to upload chart image
 
+  # Routes for training resources
+  resources :training_resources
+
   # Additional routes can be added here
 end
+
 
 
 

@@ -1,0 +1,64 @@
+<h1 class="mb-4 text-center">Edit Training Resource</h1>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @training_resource, local: true do |form| %>
+        <div class="form-group">
+          <%= form.label :title, for: "training_resource_title" %>
+          <%= form.text_field :title, id: "training_resource_title", class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :link, for: "training_resource_link" %>
+          <%= form.url_field :link, id: "training_resource_link", class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :commentary, for: "training_resource_commentary" %>
+          <%= form.text_area :commentary, id: "training_resource_commentary", class: "form-control", rows: 4 %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :job_tags, "Job Tags" %>
+          <div id="job-tags-checkboxes">
+            <% JobTag.all.each do |tag| %>
+              <div class="form-check">
+                <%= check_box_tag "training_resource[job_tag_ids][]", tag.id, @training_resource.job_tag_ids.include?(tag.id), id: "job_tag_#{tag.id}", class: "form-check-input" %>
+                <%= label_tag "job_tag_#{tag.id}", tag.name, class: "form-check-label" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :rating, 'Rating (1 to 10)', for: "training_resource_rating" %>
+          <div class="d-flex align-items-center">
+            <span class="mr-2">😢</span> <!-- Sad face -->
+            <%= form.range_field :rating, in: 1..10, step: 1, id: "training_resource_rating", class: "form-control-range" %>
+            <span class="ml-2">😊</span> <!-- Smiley face -->
+          </div>
+          <small id="ratingValueEdit" class="text-muted">Rating: <%= @training_resource.rating %></small>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit "Update", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var sliderEdit = document.getElementById('training_resource_rating');
+    var outputEdit = document.getElementById('ratingValueEdit');
+
+    sliderEdit.addEventListener('input', function(event) {
+      outputEdit.textContent = 'Rating: ' + event.target.value;
+    });
+
+    // Initialize the output on page load
+    outputEdit.textContent = 'Rating: ' + sliderEdit.value;
+  });
+</script>
