@@ -3,6 +3,7 @@ class ReportsController < ApplicationController
 
   def day_rating
     @day_rating_data = load_day_rating_data
+    @name = current_user.name
   end
 
   def day_rating_pdf
@@ -24,8 +25,8 @@ class ReportsController < ApplicationController
 
   def load_day_rating_data
     Journal.where(created_at: @start_date..@end_date)
-           .group("DATE(created_at)", :id)  # Group by date and id
-           .order("DATE(created_at) ASC")   # Order by date in ascending order
+           .group("DATE(created_at)", :id) 
+           .order("DATE(created_at) ASC")   
            .pluck("DATE(created_at)", "AVG(day_rating)", "id")
   end
 

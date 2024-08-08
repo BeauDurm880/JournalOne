@@ -33,6 +33,7 @@ gem 'googlecharts'
 gem 'groupdate'
 gem 'wicked_pdf'
 gem 'faker'
+gem 'carrierwave', '~> 2.0'
 
 
 

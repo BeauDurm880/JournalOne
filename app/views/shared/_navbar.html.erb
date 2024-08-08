@@ -19,7 +19,7 @@
           <%= link_to 'Account', user_account_path, class: 'nav-link' %> <!-- Added account link -->
         </li>
         <li class="nav-item">
-          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'nav-link text-danger' %>
+          <%= link_to "Sign Out", destroy_user_session_path, class: 'nav-link text-danger' %>
         </li>
       <% else %>
         <li class="nav-item">
