@@ -1,4 +1,4 @@
-<h1>Happiness Ratings Over Selected Period</h1>
+<h1>Employee Analytics</h1>
 
 <div class="unified-box filter-box">
   <%= form_with url: reports_day_rating_path, method: :get, local: true do |form| %>
@@ -17,7 +17,7 @@
     </div>
   <% end %>
 </div>
-<h2>Happiness Ratings Graph</h2>
+<h2>Employee Satisfaction Ratings Graph</h2>
 <div class="unified-box chart-box">
   <%= line_chart @day_rating_data,
       xtitle: "Date",
@@ -37,7 +37,7 @@
       }
   %>
 </div>
-<h2>Ratings and Entries Table</h2>
+<h2>Employee Ratings and Entries Table</h2>
 <div class="unified-box table-box">
   <!-- Move PDF Button Below -->
   <div class="mt-3">

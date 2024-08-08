@@ -1,10 +1,17 @@
 <h1 class="mb-4 text-center">All Entries</h1>
 
 <div class="container">
-  <!-- Filter form -->
+  <!-- Combined search and filter form -->
   <div class="card mb-4">
     <div class="card-body">
       <%= form_with url: journals_path, method: :get, local: true do |form| %>
+        <!-- Search Bar -->
+        <div class="form-group">
+          <%= form.label :search, 'Search Entries', class: "form-label" %>
+          <%= form.text_field :search, value: params[:search], class: "form-control" %>
+        </div>
+
+        <!-- Filters -->
         <div class="row">
           <div class="col-md-3">
             <%= form.label :start_date, 'Start Date', class: "form-label" %>
@@ -23,8 +30,10 @@
             <%= form.number_field :max_rating, value: params[:max_rating], min: 1, max: 10, step: 1, class: "form-control" %>
           </div>
         </div>
+
+        <!-- Submit and Reset Buttons -->
         <div class="form-group mt-3 text-center">
-          <%= form.submit 'Filter', class: "btn btn-outline-primary" %>
+          <%= form.submit 'Search & Filter', class: "btn btn-outline-primary" %>
           <%= link_to 'Reset', journals_path, class: 'btn btn-outline-secondary ml-2' %>
         </div>
       <% end %>
@@ -56,6 +65,8 @@
     <% end %>
   </div>
 </div>
+
+
 
 
 

@@ -1,8 +1,12 @@
+# config/routes.rb
 Rails.application.routes.draw do
   # Devise routes for user authentication
   devise_for :users, controllers: { sessions: 'devise/sessions' } do
     get '/users/sign_out', to: 'devise/sessions#destroy' # Explicit sign-out route
   end
+
+  # Add a custom route for the account page
+  get 'account', to: 'users#account', as: 'user_account'
 
   # Root path set to journals#index if it is your landing page
   root 'journals#index'
@@ -17,6 +21,8 @@ Rails.application.routes.draw do
 
   # Additional routes can be added here
 end
+
+
 
 
 

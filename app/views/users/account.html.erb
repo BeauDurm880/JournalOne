@@ -1,0 +1,13 @@
+<!-- app/views/users/account.html.erb -->
+<h1 class="mb-4 text-center">My Account</h1>
+
+<div class="container">
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title"><strong>Email:</strong> <%= @user.email %></h5>
+      <p class="card-text"><strong>Account Created:</strong> <%= @user.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+      <p class="card-text"><strong>Last Updated:</strong> <%= @user.updated_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+      <%= link_to 'Edit Account', edit_user_registration_path, class: 'btn btn-outline-primary' %>
+    </div>
+  </div>
+</div>
