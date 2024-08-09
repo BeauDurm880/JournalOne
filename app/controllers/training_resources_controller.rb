@@ -1,7 +1,7 @@
-
 class TrainingResourcesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_training_resource, only: [:show, :edit, :update, :destroy]
+    before_action :authorize_user!, only: [:edit, :update, :destroy]
   
     def index
       @training_resources = TrainingResource.all
@@ -49,6 +49,12 @@ class TrainingResourcesController < ApplicationController
       @training_resource = TrainingResource.find(params[:id])
     end
   
+    def authorize_user!
+      unless @training_resource.user == current_user
+        redirect_to training_resources_path, alert: "You are not authorized to perform this action."
+      end
+    end
+  
     def training_resource_params
       params.require(:training_resource).permit(:title, :link, :commentary, :rating, job_tag_ids: [])
     end
@@ -59,6 +65,7 @@ class TrainingResourcesController < ApplicationController
       end
     end
   end
+  
   
   
   
