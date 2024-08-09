@@ -196,4 +196,69 @@ body {
     color: #ffffff; /* White text on hover */
   }
   
+  /* Container for the training resources */
+.training-resources-container {
+    margin-top: 20px;
+  }
+  
+  /* Card styling */
+  .training-resource-card {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .training-resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .training-resource-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  /* Commentary styling */
+  .training-resource-commentary {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  /* Rating styling */
+  .training-resource-rating {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Tags styling */
+  .training-resource-tags {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Avatar styling */
+  .training-resource-avatar {
+    border: 2px solid #007bff; /* Blue border similar to button outline */
+  }
+  
+  /* Button styling */
+  .training-resource-link, .training-resource-edit-btn {
+    border-radius: 20px;
+    font-size: 0.85rem;
+  }
+/* Training Resources Page Styling */
+.training-resource-card {
+    background-color: #ffffff; /* White background for cards */
+    border: 1px solid #e0e0e0; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .avatar-thumbnail {
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 50%; /* Ensure it's circular */
+    display: inline-block; /* Make sure it stays inline */
+  }
+  
+ 
   

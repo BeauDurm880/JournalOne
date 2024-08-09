@@ -1,4 +1,4 @@
-# app/controllers/training_resources_controller.rb
+
 class TrainingResourcesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_training_resource, only: [:show, :edit, :update, :destroy]
