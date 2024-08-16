@@ -1,61 +1,174 @@
 <h1 class="mb-4 text-center">All Entries</h1>
 
 <div class="container">
-  <!-- Filter form -->
-  <div class="card mb-4">
-    <div class="card-body">
-      <%= form_with url: journals_path, method: :get, local: true do |form| %>
-        <div class="row">
-          <div class="col-md-3">
-            <%= form.label :start_date, 'Start Date', class: "form-label" %>
-            <%= form.date_field :start_date, value: params[:start_date], class: "form-control" %>
+  <!-- Filter form wrapped in Turbo Frame -->
+  <turbo-frame id="filter-form">
+    <div class="card mb-4">
+      <div class="card-body">
+        <%= form_with url: journals_path, method: :get, local: true, html: { data: { turbo_frame: 'entries-list' } } do |form| %>
+          <div class="row">
+            <div class="col-md-3">
+              <%= form.label :start_date, 'Start Date', class: "form-label" %>
+              <%= form.date_field :start_date, value: params[:start_date], class: "form-control" %>
+            </div>
+            <div class="col-md-3">
+              <%= form.label :end_date, 'End Date', class: "form-label" %>
+              <%= form.date_field :end_date, value: params[:end_date], class: "form-control" %>
+            </div>
+            <div class="col-md-3">
+              <%= form.label :min_rating, 'Min Rating', class: "form-label" %>
+              <%= form.number_field :min_rating, value: params[:min_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+            </div>
+            <div class="col-md-3">
+              <%= form.label :max_rating, 'Max Rating', class: "form-label" %>
+              <%= form.number_field :max_rating, value: params[:max_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+            </div>
           </div>
-          <div class="col-md-3">
-            <%= form.label :end_date, 'End Date', class: "form-label" %>
-            <%= form.date_field :end_date, value: params[:end_date], class: "form-control" %>
+          <div class="form-group mt-3 text-center">
+            <%= form.submit 'Filter', class: "button-consistent btn btn-primary" %>
+            <%= link_to 'Reset', journals_path, class: 'btn btn-outline-secondary ml-2', data: { turbo_frame: 'entries-list' }, onclick: "resetFilters(event)" %>
           </div>
-          <div class="col-md-3">
-            <%= form.label :min_rating, 'Min Rating', class: "form-label" %>
-            <%= form.number_field :min_rating, value: params[:min_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+  </turbo-frame>
+
+  <!-- Entries list wrapped in Turbo Frame -->
+  <turbo-frame id="entries-list">
+    <div class="list-group">
+      <% @entries.each do |entry| %>
+        <div class="list-group-item mb-4 p-4" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="mb-2 text-muted"><strong>Date Added:</strong> <%= entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+              <h4 class="mb-1" style="font-weight: bold;"><%= entry.name %></h4>
+              <% if entry.journal_info.present? && entry.journal_info.length > 100 %>
+                <p class="mb-3" style="font-size: 1rem; color: #333;">
+                  <span class="entry-short-text"><%= truncate(entry.journal_info, length: 100) %></span>
+                  <span class="entry-full-text" style="display:none;"><%= entry.journal_info %></span>
+                </p>
+              <% else %>
+                <p class="mb-3" style="font-size: 1rem; color: #333;"><%= entry.journal_info %></p>
+              <% end %>
+              <div class="mt-3">
+                <p class="mb-1"><strong>Day Rating:</strong> <%= entry.day_rating %> / 10</p>
+                <p class="mb-1"><strong>Trainings Done:</strong> <%= entry.trainings_done.present? ? entry.trainings_done : "No Trainings" %></p>
+                <p class="mb-1"><strong>Internal Work Done:</strong> <%= entry.internal_work_done.present? ? entry.internal_work_done : "No Internal Work" %></p>
+              </div>
+            </div>
           </div>
-          <div class="col-md-3">
-            <%= form.label :max_rating, 'Max Rating', class: "form-label" %>
-            <%= form.number_field :max_rating, value: params[:max_rating], min: 1, max: 10, step: 1, class: "form-control" %>
+
+          <div class="text-center mt-3">
+            <div class="btn-group">
+              <% if entry.journal_info.present? && entry.journal_info.length > 100 %>
+                <%= link_to 'Show More', '#', class: "btn btn-outline-primary toggle-text", data: { entry_id: entry.id } %>
+              <% end %>
+              <%= link_to 'Edit', '#', class: "btn btn-outline-primary edit-toggle", data: { entry_id: entry.id } %>
+              <%= button_to "Delete", journal_path(entry), method: :delete, data: { confirm: "Are you sure you want to delete this journal entry?" }, class: "btn btn-outline-secondary" %>
+            </div>
           </div>
-        </div>
-        <div class="form-group mt-3 text-center">
-          <%= form.submit 'Filter', class: "button-consistent btn btn-primary" %>
-          <%= link_to 'Reset', journals_path, class: 'btn btn-outline-secondary ml-2' %>
+
+          <!-- Hidden form for editing the entry, wrapped in Turbo Frame -->
+          <turbo-frame id="edit-form-<%= entry.id %>" class="edit-form-container mt-3" style="display:none;">
+            <h5 class="mt-3">Edit Entry: <%= entry.name %></h5>
+            <%= form_with(model: entry, url: journal_path(entry), method: :patch, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :name, "Entry Title", class: "form-label" %>
+                <%= form.text_field :name, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.label :journal_info, class: "form-label" %>
+                <%= form.text_area :journal_info, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.label :trainings_done, 'Trainings Done', class: "form-label" %>
+                <%= form.text_area :trainings_done, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.label :internal_work_done, 'Internal Work Done', class: "form-label" %>
+                <%= form.text_area :internal_work_done, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.label :day_rating, 'How would you rate your day?', class: "form-label" %>
+                <div class="d-flex align-items-center">
+                  <span class="mr-2">😢</span>
+                  <%= form.range_field :day_rating, class: "form-control-range", min: 1, max: 10, step: 1, value: entry.day_rating || 5 %>
+                  <span class="ml-2">😊</span>
+                </div>
+                <small id="ratingValue-<%= entry.id %>" class="text-muted">Rating: <%= entry.day_rating || 5 %></small>
+              </div>
+              <div class="form-group">
+                <%= form.submit "Update Entry", class: "button-consistent btn btn-primary" %>
+              </div>
+            <% end %>
+          </turbo-frame>
         </div>
       <% end %>
     </div>
-  </div>
-
-  <!-- Entries list -->
-  <div class="list-group">
-    <% @entries.each do |entry| %>
-      <div class="list-group-item mb-3">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h5 class="mb-1"><strong>Name:</strong> <%= entry.name %></h5>
-            <p class="mb-1"><strong>Description:</strong> <%= truncate(entry.journal_info, length: 100) %></p>
-            <p class="mb-1"><strong>Date Added:</strong> <%= entry.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
-            <p class="mb-1"><strong>Day Rating:</strong> <%= entry.day_rating %> / 10</p>
-            <p class="mb-1"><strong>Trainings Done:</strong> <%= entry.trainings_done %></p>
-            <p class="mb-1"><strong>Internal Work Done:</strong> <%= entry.internal_work_done %></p>
-          </div>
-          <div class="col-md-4 text-md-right">
-            <div class="btn-group" role="group" aria-label="Actions">
-              <%= link_to 'Show', journal_path(entry), class: "btn btn-outline-primary d-inline-block" %>
-              <%= link_to 'Edit', edit_journal_path(entry), class: "btn btn-outline-primary d-inline-block" %>
-              <%= button_to "Delete", journal_path(entry), method: :delete, data: { confirm: "Are you sure you want to delete this journal entry?" }, class: "btn btn-outline-secondary ml-2" %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  </turbo-frame>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Toggle text visibility
+    document.querySelectorAll('.toggle-text').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var entryId = event.currentTarget.dataset.entryId;
+        var shortText = event.currentTarget.closest('.list-group-item').querySelector('.entry-short-text');
+        var fullText = event.currentTarget.closest('.list-group-item').querySelector('.entry-full-text');
+
+        if (fullText.style.display === 'none') {
+          shortText.style.display = 'none';
+          fullText.style.display = 'block';
+          event.currentTarget.textContent = 'Show Less';
+        } else {
+          shortText.style.display = 'block';
+          fullText.style.display = 'none';
+          event.currentTarget.textContent = 'Show More';
+        }
+      });
+    });
+
+    // Toggle edit form visibility
+    document.querySelectorAll('.edit-toggle').forEach(function(button) {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        var entryId = event.currentTarget.dataset.entryId;
+        var formContainer = document.getElementById('edit-form-' + entryId);
+
+        // Hide all open forms
+        document.querySelectorAll('.edit-form-container').forEach(function(container) {
+          if (container !== formContainer) {
+            container.style.display = 'none';
+          }
+        });
+
+        // Toggle the display of the selected form
+        formContainer.style.display = (formContainer.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+
+    // Initialize the sliders for all entries
+    document.querySelectorAll('input[type="range"]').forEach(function(slider) {
+      var entryId = slider.closest('.edit-form-container').id.split('-').pop();
+      var output = document.getElementById('ratingValue-' + entryId);
+
+      slider.addEventListener('input', function(event) {
+        output.textContent = 'Rating: ' + event.target.value;
+      });
+
+      // Initialize the output on page load
+      output.textContent = 'Rating: ' + slider.value;
+    });
+    function resetFilters() {
+    window.location.href = '<%= journals_path %>';
+  }
+  });
+</script>
+
+
+
 
 
 

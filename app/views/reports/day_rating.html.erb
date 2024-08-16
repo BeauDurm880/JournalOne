@@ -60,13 +60,14 @@
           <tr>
             <td><%= date.strftime('%B %d, %Y') %></td>
             <td><%= number_with_precision(average_rating, precision: 2) %></td>
-            <td><%= link_to 'View Entry', journal_path(id), class: 'button-consistent' %></td>
+            <td><%= link_to 'View Entry', journal_path(id), target: "_blank", class: 'button-consistent' %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
+
 
 
 

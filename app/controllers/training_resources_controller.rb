@@ -5,6 +5,13 @@ class TrainingResourcesController < ApplicationController
   
     def index
       @training_resources = TrainingResource.all
+  
+      if params[:query].present?
+        # Use ILIKE for case-insensitive search (PostgreSQL)
+        query = "%#{params[:query]}%"
+        @training_resources = @training_resources.where("title ILIKE ? OR commentary ILIKE ?", query, query)
+      end
+  
       @training_resource = TrainingResource.new
     end
   
@@ -65,6 +72,12 @@ class TrainingResourcesController < ApplicationController
       end
     end
   end
+  
+  
+  
+  
+  
+  
   
   
   

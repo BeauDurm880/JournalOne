@@ -259,6 +259,44 @@ body {
     border-radius: 50%; /* Ensure it's circular */
     display: inline-block; /* Make sure it stays inline */
   }
+/* custom styles for edit partial in journals */
+  .edit-toggle.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+  button:focus, 
+a.button-consistent:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.list-group-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  .list-group-item h4 {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  .list-group-item p {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .list-group-item .btn-group .btn {
+    margin-right: 8px;
+  }
+  
+  .list-group-item .edit-form-container {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
   
  
   
